@@ -1,8 +1,9 @@
+from django.urls import re_path, include
 from django.contrib import admin
-from django.urls import path, include
-from res.admin import admin_site
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('admin/', admin_site.urls),
-    path('res/', include('res.urls')),
+    re_path(r'', include(('res.urls', 'res'), namespace='res')),
+    re_path(r'^res/', include('res.urls')),
+    re_path(r'^admin/', admin.site.urls),
 ]
