@@ -1,6 +1,7 @@
 from django import forms
 from .models import Student
-from .models import Food
+from .models import Dish
+
 
 class StudentForm(forms.ModelForm):
     class Meta:
@@ -13,9 +14,11 @@ class StudentForm(forms.ModelForm):
             'roll': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
 class FoodForm(forms.ModelForm):
     class Meta:
-        model = Food
+        model = Dish
         fields = ['name', 'status', 'price', 'image']
         widgets = {
             'status': forms.Select(attrs={'class': 'form-control'}),

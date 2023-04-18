@@ -3,7 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .models import Student
 from .forms import StudentForm
 from .forms import FoodForm
-from .models import Food
+from .models import Dish
 
 
 def res_add(request):
@@ -35,7 +35,7 @@ def home(request):
 
 
 @staff_member_required
-def add_food(request):
+def add_dish(request):
     if request.method == 'POST':
         form = FoodForm(request.POST)
         if form.is_valid():
@@ -48,5 +48,5 @@ def add_food(request):
 
 
 def food_list(request):
-    foods = Food.objects.all()
+    foods = Dish.objects.all()
     return render(request, 'admin/food.html', {'foods': foods})
