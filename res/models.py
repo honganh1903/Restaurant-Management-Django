@@ -1,3 +1,4 @@
+
 # from django.db import models
 
 # # Create your models here.
@@ -60,6 +61,7 @@ class Menu(models.Model):
 
 class Dish(models.Model):
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+
     disabled = 'Disabled'
     enabled = 'Enabled'
 

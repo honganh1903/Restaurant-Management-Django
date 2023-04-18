@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import Student
 from .forms import StudentForm
+from .forms import FoodForm
+from .models import Food
 
 
 def res_add(request):
@@ -29,3 +32,21 @@ def res_add(request):
 def home(request):
     students = Student.objects.all()
     return render(request, 'res/home.html', {"students": students})
+
+
+@staff_member_required
+def add_food(request):
+    if request.method == 'POST':
+        form = FoodForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Điều hướng sau khi thêm món ăn thành công
+            return redirect('/admin/food-list')
+    else:
+        form = FoodForm()
+    return render(request, 'admin/add-food.html', {'form': form})
+
+
+def food_list(request):
+    foods = Food.objects.all()
+    return render(request, 'admin/food.html', {'foods': foods})
