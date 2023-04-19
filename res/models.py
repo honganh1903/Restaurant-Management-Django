@@ -34,7 +34,7 @@ class Employee(models.Model):
     def __str__(self):
         return self.employee.first_name + " " + self.employee.last_name
     
-class Food(models.Model):
+class Dish(models.Model):
     disabled = 'Disabled'
     enabled = 'Enabled'
 
