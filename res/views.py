@@ -1,15 +1,10 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.admin.views.decorators import staff_member_required
-from .models import Student
 
-from .forms import StudentForm
-from .forms import DishForm
+# from .forms import DishForm
 from .models import *
 
-def home(request):
-    students = Student.objects.all()
-    return render(request, 'res/home.html', {"students": students})
 
 
 @staff_member_required
@@ -19,16 +14,16 @@ def dashboard(request):
 # DISH
 
 
-def add_dish(request):
-    if request.method == 'POST':
-        form = DishForm(request.POST)
-        if form.is_valid():
-            form.save()
+# def add_dish(request):
+#     if request.method == 'POST':
+#         form = DishForm(request.POST)
+#         if form.is_valid():
+#             form.save()
 
-            return redirect('/admin/dish_list') # Điều hướng sau khi thêm món ăn thành công
-    else:
-        form = DishForm()
-    return render(request, 'admin/add_dish.html', {'form': form})
+#             return redirect('/admin/dish_list') # Điều hướng sau khi thêm món ăn thành công
+#     else:
+#         form = DishForm()
+#     return render(request, 'admin/add_dish.html', {'form': form})
 def dish_list(request): 
     dishes = Dish.objects.all()
     return render(request, 'admin/dish.html', {'dishes': dishes})
