@@ -32,6 +32,10 @@ def dish_list(request):
 
 def customer_list(request): 
     customers = Customer.objects.all()
+    for customer in customers:
+        user = User.objects.get(id=customer.customer_id)
+        customer.username = user.username
+        customer.name = user.first_name + ' ' + user.last_name
     return render(request, 'admin/customer.html', {'customers': customers})
 
 # EMPLOEE
