@@ -38,8 +38,12 @@ def customer_list(request):
 
 def employee_list(request): 
     employees = Employee.objects.all()
-    return render(request, 'admin/employee.html', {'employees': employees})
+    for employee in employees:
+        user = User.objects.get(id=employee.employee_id)
+        employee.username = user.username
+        employee.name = user.first_name + ' ' + user.last_name
 
+    return render(request, 'admin/employee.html', {'employees': employees})
 # ORDER
 
 def order_list(request): 
