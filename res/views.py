@@ -36,12 +36,23 @@ def employee_list(request):
         employee.name = user.first_name + ' ' + user.last_name
 
     return render(request, 'admin/employee.html', {'employees': employees})
+
 # CART
 
 def cart_list(request): 
     carts = Cart.objects.all()
-    for cart in carts:
-        orders = Order.objects.get(cart_id= cart.id)
+    list_cart = []
+    for elm in carts:
+        cart = []
+        total = 0
+        orders = Order.objects.filter(cart_id=elm.id)
         for order in orders:
-            dishes = Dish.objects.get(id= order.food_id)
-    return render(request, 'admin/cart.html', {'carts': carts},{'dishes': dishes})
+            dish = Dish.objects.get(id = order.food_id)
+            cart.append(dish)
+            total = total + dish.price * order.amount
+            cart.append(order.amount)
+        cart.append(total)
+        list_cart.append(cart)
+    for elm in list_cart:
+        print(elm)
+    return render(request, 'admin/cart.html', {'list_cart': list_cart})
