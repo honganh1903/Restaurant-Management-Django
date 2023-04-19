@@ -57,7 +57,7 @@ class Menu(models.Model):
         return self.type
 
 
-class Disk(models.Model):
+class Dish(models.Model):
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     disabled = 'Disabled'
     enabled = 'Enabled'
