@@ -12,18 +12,6 @@ def dashboard(request):
     return render(request, 'admin/dashboard.html')
 
 # DISH
-
-
-# def add_dish(request):
-#     if request.method == 'POST':
-#         form = DishForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-
-#             return redirect('/admin/dish_list') # Điều hướng sau khi thêm món ăn thành công
-#     else:
-#         form = DishForm()
-#     return render(request, 'admin/add_dish.html', {'form': form})
 def dish_list(request): 
     dishes = Dish.objects.all()
     return render(request, 'admin/dish.html', {'dishes': dishes})
@@ -48,8 +36,8 @@ def employee_list(request):
         employee.name = user.first_name + ' ' + user.last_name
 
     return render(request, 'admin/employee.html', {'employees': employees})
-# ORDER
+# CART
 
-def order_list(request): 
-    orders = Order.objects.all()
-    return render(request, 'admin/order.html', {'orders': orders})
+def cart_list(request): 
+    carts = Cart.objects.all()
+    return render(request, 'admin/order.html', {'carts': carts})
