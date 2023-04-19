@@ -24,22 +24,11 @@
                             <h4 class="modal-title">Add Food</h4>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" action="/res/add-student/" enctype="multipart/form-data">
+                            <form method="POST" action="{% url 'res:add_dish' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="name">Name:</label>
                                     <input type="text" class="form-control" id="name" name="name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="course">Course:</label>
-                                    <select class="dropdown" id="course" name="course">
-                                        <option selected="selected">------</option>
-                                        <option value="Indian">Negros Best Food</option>
-                                        <option value="Gujarati">Manila Best Food</option>
-                                        <option value="South">Cebu Best Food</option>
-                                        <option value="Punjabi">Iloilo Best Food</option>
-                                        <option value="Fast">Aklan Food</option>
-                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="status">Status:</label>
@@ -50,8 +39,12 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="content">Content Description:</label>
-                                    <input type="text" class="form-control" id="content" name="content">
+                                    <label for="{{ form.menu.auto_id }}">{{ form.menu.label }}</label>
+                                    {{ form.menu }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Price:</label>
+                                    <input type="number" class="form-control" id="price" name="price">
                                 </div>
                                 <div class="form-group">
                                     <label for="image">Image:</label>
@@ -92,7 +85,7 @@
                         <tbody>
                             {% for food in foods %}
                             <tr>
-                                <td><img src="/media/{{food.image}}" alt="Mô tả hình ảnh" width="45" height="45"></td>
+                        <td><img src="../../media/{{food.image}}" alt="Mô tả hình ảnh" width="45" height="45"></td>
                                 <td>{{food.name}}</td>
                                 <td>{{food.course}}</td>
                                 <td>{{food.content_description|truncatechars:150}}</td>
@@ -120,7 +113,7 @@
                                                     <h4 class="modal-title">Edit Food Details</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form method="POST" action="/res/add-student/">
+                                                    <form method="POST" action="{% url 'res:add_dish' %}">
                                                         {% csrf_token %}
                                                         <div class="form-group">
                                                             <label for="base_price">Base Price:</label>
