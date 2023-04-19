@@ -106,7 +106,7 @@ class Cart(models.Model):
 
 class Order(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    food = models.ForeignKey(Disk, on_delete=models.CASCADE)
+    food = models.ForeignKey(Dish, on_delete=models.CASCADE)
     amount = models.IntegerField()
     details = models.CharField(max_length=100, default="")
 
