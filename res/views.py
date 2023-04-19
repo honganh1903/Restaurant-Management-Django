@@ -40,4 +40,8 @@ def employee_list(request):
 
 def cart_list(request): 
     carts = Cart.objects.all()
-    return render(request, 'admin/order.html', {'carts': carts})
+    for cart in carts:
+        orders = Order.objects.get(cart_id= cart.id)
+        for order in orders:
+            dishes = Dish.objects.get(id= order.food_id)
+    return render(request, 'admin/cart.html', {'carts': carts},{'dishes': dishes})
