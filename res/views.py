@@ -16,24 +16,29 @@ def res_add(request):
             roll = form.cleaned_data['roll']
             phone = form.cleaned_data['phone']
             # Tạo một đối tượng Student mới với dữ liệu từ form
-            student = Student(name=name, email=email, address=address, roll=roll, phone=phone)
+            student = Student(name=name, email=email,
+                              address=address, roll=roll, phone=phone)
             # Lưu đối tượng Student vào cơ sở dữ liệu
             student.save()
-            print("Added") # In ra thông báo sau khi thêm dữ liệu thành công
-            return redirect('/res/home') # Chuyển hướng đến trang chủ sau khi thêm dữ liệu
+            print("Added")  # In ra thông báo sau khi thêm dữ liệu thành công
+            # Chuyển hướng đến trang chủ sau khi thêm dữ liệu
+            return redirect('/res/home')
     else:
         form = StudentForm()
     return render(request, 'res/res_add.html', {'form': form})
 
+
 def home(request):
     students = Student.objects.all()
     return render(request, 'res/home.html', {"students": students})
+
 
 @staff_member_required
 def dashboard(request): 
     return render(request, 'admin/dashboard.html')
 
 # DISH
+
 
 def add_dish(request):
     if request.method == 'POST':
