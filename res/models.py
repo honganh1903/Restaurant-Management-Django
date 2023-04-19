@@ -1,3 +1,8 @@
+# from django.db import models
+
+# # Create your models here.
+
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -16,7 +21,7 @@ class Student(models.Model):
 class Customer(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.TextField()
-    number_phone = models.TextField(max_length = 10)
+    number_phone = models.TextField(max_length=10)
     username = User.username
     password = User.password
 
@@ -27,14 +32,33 @@ class Customer(models.Model):
 class Employee(models.Model):
     employee = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.TextField()
-    number_phone = models.TextField(max_length = 10)
+    number_phone = models.TextField(max_length=10)
     username = User.username
     password = User.password
 
     def __str__(self):
         return self.employee.first_name + " " + self.employee.last_name
-    
-class Dish(models.Model):
+
+class Menu(models.Model):
+    # disk = models.ForeignKey(Disk, on_delete=models.CASCADE)
+
+    food = 'Food'
+    drink = 'Drink'
+    refreshment = 'Refreshment'
+    TYPE = (
+        (food, food),
+        (drink, drink),
+        (refreshment, refreshment)
+    )
+    type = models.CharField(max_length=50, choices=TYPE)
+    details = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.type
+
+
+class Disk(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     disabled = 'Disabled'
     enabled = 'Enabled'
 
@@ -82,7 +106,7 @@ class Cart(models.Model):
 
 class Order(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    food = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    food = models.ForeignKey(Disk, on_delete=models.CASCADE)
     amount = models.IntegerField()
     details = models.CharField(max_length=100, default="")
 
