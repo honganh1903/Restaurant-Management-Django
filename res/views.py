@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Student
 from .forms import StudentForm
-from .forms import FoodForm
-from .models import Food
+from .forms import DishForm
+from .models import *
 
 def res_add(request):
     if request.method == 'POST':
@@ -30,15 +30,38 @@ def home(request):
     return render(request, 'res/home.html', {"students": students})
 
 @staff_member_required
-def add_food(request):
+def dashboard(request): 
+    return render(request, 'admin/dashboard.html')
+
+# DISH
+
+def add_dish(request):
     if request.method == 'POST':
-        form = FoodForm(request.POST)
+        form = DishForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/admin/food-list') # Điều hướng sau khi thêm món ăn thành công
+            return redirect('/admin/dish_list') # Điều hướng sau khi thêm món ăn thành công
     else:
-        form = FoodForm()
-    return render(request, 'admin/add-food.html', {'form': form})
-def food_list(request): 
-    foods = Food.objects.all()
-    return render(request, 'admin/food.html', {'foods': foods})
+        form = DishForm()
+    return render(request, 'admin/add_dish.html', {'form': form})
+def dish_list(request): 
+    dishes = Dish.objects.all()
+    return render(request, 'admin/dish.html', {'dishes': dishes})
+
+# CUSTOMER
+
+def customer_list(request): 
+    customers = Customer.objects.all()
+    return render(request, 'admin/customer.html', {'customers': customers})
+
+# EMPLOEE
+
+def employee_list(request): 
+    employees = Employee.objects.all()
+    return render(request, 'admin/employee.html', {'employees': employees})
+
+# ORDER
+
+def order_list(request): 
+    orders = Order.objects.all()
+    return render(request, 'admin/order.html', {'orders': orders})

@@ -1,0 +1,36 @@
+{% load static %}
+{% include "includes/base.html" %}
+{% include "includes/navbarheader.html" %}
+{% include "includes/navtop.html"%}
+{% include "includes/sidemenu.html" %}
+
+</nav>
+
+<!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+
+<!-- DataTables JavaScript -->
+<script src="{% static '/vendor/datatables/js/jquery.dataTables.min.js'%}"></script>
+<script src="{% static '/vendor/datatables-plugins/dataTables.bootstrap.min.js'%}"></script>
+<script src="{% static '/vendor/datatables-responsive/dataTables.responsive.js'%}"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+<script src="{% static 'vendor/metisMenu/metisMenu.min.js'%}"></script>
+<script src="{% static 'dist/js/sb-admin-2.js'%}"></script>
+
+</body>
+
+</html>
