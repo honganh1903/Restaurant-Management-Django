@@ -36,6 +36,7 @@
                                 <th>Image</th>
                                 <th>Name</th>
                                 <th>Price</th>
+                                <th>Type</th>
                                 <th>Status</th>
                                 <th>Edit</th>
                             </tr>
@@ -47,6 +48,14 @@
                                 <td><img src="/media/{{dish.image}}" alt="Mô tả hình ảnh" width="45" height="45"></td>
                                 <td>{{dish.name}}</td>
                                 <td>{{dish.price}}</td>
+                                <td>{% if dish.menu_id == 1 %}
+                                        <p>Food</p>
+                                    {% elif dish.menu_id == 2 %}
+                                        <p>Drink</p>
+                                    {% else %}
+                                        <p>Refreshment</p>
+                                    {% endif %}
+                                </td>
                                 <td>{% if dish.status == 'Enabled' %}
                                     <span class="label label-success">Enabled</span>
                                     {% else %}
