@@ -8,5 +8,5 @@ urlpatterns = [
     re_path(r'^dashboard/add_dish/$',add_dish, name='add_dish'),
     re_path(r'^dashboard/customer_list/$',customer_list, name='customer_list'),
     re_path(r'^dashboard/employee_list$',employee_list, name='employee_list'),
-    re_path(r'^dashboard/order_list$',order_list, name='order_list'),
+    re_path(r'^dashboard/cart_list$',cart_list, name='cart_list'),
 ]
