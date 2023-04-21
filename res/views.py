@@ -43,24 +43,35 @@ def dish_list(request):
 
 @login_required
 @staff_member_required
-def edit_food(request, dishID):
-    dish = Dish.objects.filter(id=dishID)[0]
+def edit_dish(request, dishID):
+    dish = Dish.objects.get(id=dishID)
+
     if request.method == "POST":
-        if request.POST['price'] != "":
-            dish.price = request.POST['price']
+        print('Update')
+        dish.name = request.POST.get('name', dish.name)
+        dish.menu = Menu.objects.get(type=request.POST.get('menu', dish.menu.type))
 
-        if request.POST['discount'] != "":
-            dish.discount = request.POST['discount']
+        status = request.POST.get('status')
+        if status:
+            dish.status = status
 
-        status = request.POST.get('disabled')
-        if status == 'on':
-            dish.status = "Disabled"
-        else:
-            dish.status = "Enabled"
+        dish.price = request.POST.get('price', dish.price)
+
+        image = request.FILES.get('image-edit')
+        if image:
+            dish.image = image
 
         dish.save()
-    return redirect('hotel:dishs_admin')
+    return redirect(reverse('res:dish_list'))
 
+@login_required
+@staff_member_required
+def delete_dish(request, dishID):
+    item = Dish.objects.get(id=dishID)
+    if request.method == 'POST':
+        print('Delete')
+        item.delete()
+    return redirect(reverse('res:dish_list'))
 
 # CUSTOMER
 
