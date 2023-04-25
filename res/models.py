@@ -28,19 +28,23 @@ class Employee(models.Model):
     def __str__(self):
         return self.employee.first_name + " " + self.employee.last_name
 
+
 class Menu(models.Model):
     # disk = models.ForeignKey(Disk, on_delete=models.CASCADE)
 
-    food = 'Food'
-    drink = 'Drink'
-    refreshment = 'Refreshment'
+    food = 'Foods'
+    drink = 'Drinks'
+    refreshment = 'Refreshments'
+    sale_off_dish = 'Sale off Dishes'
     TYPE = (
         (food, food),
         (drink, drink),
-        (refreshment, refreshment)
+        (refreshment, refreshment),
+        (sale_off_dish, sale_off_dish)
     )
     type = models.CharField(max_length=50, choices=TYPE)
     details = models.CharField(max_length=200)
+    image = models.FileField(blank=True, null=True)
 
     def __str__(self):
         return self.type
@@ -95,7 +99,7 @@ class Cart(models.Model):
 
 class Order(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    food = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
     amount = models.IntegerField()
     details = models.CharField(max_length=100, default="")
 
