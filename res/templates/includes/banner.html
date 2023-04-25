@@ -1,0 +1,84 @@
+{% load static%}
+
+<div class="banner">
+	<div class="container">
+		<div class="header">
+			<div class="logo">
+				<h1><a href="/">HATT Restaurant</a></h1>
+			</div>
+			<div class="top-nav">
+				<nav class="navbar navbar-default">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+						data-target="#bs-example-navbar-collapse-1">Menu
+					</button>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li><a href="{% url 'res:home' %}">Home</a></li>
+							<li><a class="active" href="{% url 'res:menu' %}">Menu</a></li>
+							{% if user.is_authenticated %}
+							<li><a href="{% url 'res:dashboard' %}">Dashboard</a></li>
+
+							<li><a href="/accounts/logout/">Logout</a></li>
+							{% else %}
+							<li><a href="/accounts/login/">Login</a></li>
+							{% endif %}
+							<div class="clearfix"> </div>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<div class="banner-info">
+			<h2>Tasty food served at your doorstep</h2>
+			<p>Experience the fastest delivery. Order now and get your food at your doorstep in 30 minutes!</p>
+		</div>
+		<div class="banner-grads">
+			<div class="col-md-3 banner-grad">
+				<a href="">
+					<div class="banner-grad-img">
+						<img src="{% static 'images/chef1.png' %}" alt="" />
+						<h4>Chef Anh</h4>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-3 banner-grad">
+				<a href="">
+					<div class="banner-grad-img">
+						<img src="{% static 'images/chef2.jpg' %}" alt="" />
+						<h4>Chef Huy</h4>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-3 banner-grad">
+				<a href="">
+					<div class="banner-grad-img">
+						<img src="{% static 'images/chef3.jpg' %}" alt="" />
+						<h4>Chef Thuan</h4>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-3 banner-grad">
+				<a href="">
+					<div class="banner-grad-img">
+						<img src="{% static 'images/chef4.jpg' %}" alt="" />
+						<h4>Chef Tung</h4>
+					</div>
+				</a>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		var current_url = window.location.href;
+		var home_url = "http://127.0.0.1:8000" + "{% url 'res:home' %}";
+		if (current_url == home_url) {
+			$(".navbar li a").removeClass("active");
+			$(".navbar li:first-child a").addClass("active");
+		}
+	});
+</script>
