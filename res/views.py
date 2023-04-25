@@ -96,20 +96,41 @@ def employee_list(request):
 
 # CART
 
+def cart_detail(request,cartID): 
+    detail = []
+    total = 0
+    orders = Order.objects.filter(cart_id=cartID)
+    for order in orders:
+        
+        order_detail = {}
+        dish = Dish.objects.get(id = order.food_id)
+        total = total + dish.price * order.amount
+        order_detail[dish] = [order.details,order.amount]
+        detail.append(order_detail)
+    total1 = {"total": total}
+    detail.append(total1)
+    for item in detail :
+        for dish, k in item.items():
+            if dish != 'total':
+                for y in k:
+                    print(y)
+            else :
+                print(k)
+    return render(request, 'admin/cart_detail.html', {'detail': detail})
+
 def cart_list(request): 
     carts = Cart.objects.all()
-    list_cart = []
+    list_idcart = []
     for elm in carts:
-        cart = []
-        total = 0
-        orders = Order.objects.filter(cart_id=elm.id)
-        for order in orders:
-            dish = Dish.objects.get(id = order.food_id)
-            cart.append(dish)
-            total = total + dish.price * order.amount
-            cart.append(order.amount)
-        cart.append(total)
-        list_cart.append(cart)
-    for elm in list_cart:
-        print(elm)
-    return render(request, 'admin/cart.html', {'list_cart': list_cart})
+        customers = Customer.objects.filter(id=elm.employee_id)
+        list_idcart.append(elm.id)
+    return render(request, 'admin/cart.html', {'list_idcart': list_idcart, 'customers': customers})
+def delete_dish_in_cart(request, dishID,cartID):
+    cart = Cart.objects.get(id=cartID)
+    item = Dish.objects.get(id=dishID)
+    if request.method == 'POST':
+        print('Delete')
+        item.delete()
+    return redirect(reverse('res:cart_list'))
+def show_html(request):
+    return render(request, 'admin/h.html')
