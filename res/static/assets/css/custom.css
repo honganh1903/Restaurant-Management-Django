@@ -2,17 +2,17 @@
 	General Styles
 -----------------------------------*/
 
-body{
-	font-size : 14px;
+body {
+	font-size: 14px;
 	background-color: #f2f6f9;
 }
 
-ul{
+ul {
 	list-style-type: none;
 }
 
 a:hover {
-	text-decoration:none;
+	text-decoration: none;
 }
 
 
@@ -20,29 +20,29 @@ a:hover {
 	Navbar
 -----------------------------------*/
 
-.minicart{
-	background:url(../images/sprite.png);
+.minicart {
+	background: url(../images/sprite.png);
 	background-position: -156px 11px;
-	background-repeat:no-repeat;
+	background-repeat: no-repeat;
 	width: 40px;
 	height: 50px;
 	padding-right: 32px;
 }
 
-.navbar{
+.navbar {
 	background-color: #4ea6bc;
-	padding: 15px ;
+	padding: 15px;
 	border-radius: 0;
 	margin: 0;
 }
 
-.navbar-brand{
+.navbar-brand {
 	color: #fff;
 	font-family: Open Sans, sans-serif;
 	padding-left: 32px;
 }
 
-.navbar-brand:hover{
+.navbar-brand:hover {
 	color: #fff;
 }
 
@@ -50,14 +50,14 @@ a:hover {
 	Breadcrumb
 -----------------------------------*/
 
-.breadcrumb > .active a{
+.breadcrumb>.active a {
 	color: #468595;
 	font-weight: bold;
 	text-transform: uppercase;
 }
 
-.breadcrumb li a{
-	color :#b3d4dc;
+.breadcrumb li a {
+	color: #b3d4dc;
 	font-weight: bold;
 	text-transform: uppercase;
 }
@@ -66,12 +66,12 @@ a:hover {
 	content: "\00BB";
 }
 
-.breadcrumb{
+.breadcrumb {
 	margin-bottom: 100px;
 	background-color: #ffffff;
 }
 
-.breadcrumbBox{
+.breadcrumbBox {
 	background-color: #ffffff;
 	height: 100px;
 	margin-bottom: 100px;
@@ -82,7 +82,7 @@ a:hover {
 	Main
 -----------------------------------*/
 
-.container.text-center{
+.container.text-center {
 	padding: 0 32px;
 }
 
@@ -91,32 +91,32 @@ a:hover {
 ----------------------------------- */
 
 
-.col-md-5.col-sm-12{
+.col-md-5.col-sm-12 {
 	padding: 0;
 }
 
-.col-md-5.col-sm-12 h1{
+.col-md-5.col-sm-12 h1 {
 	color: #595c5f;
 	font-size: 24px;
 	font-weight: bold;
-	margin-bottom:30px;
+	margin-bottom: 30px;
 	text-align: left;
 }
 
-.col-md-5.col-sm-12 p{
+.col-md-5.col-sm-12 p {
 	color: #898e92;
 	line-height: 1.5;
 	max-width: 400px;
 	text-align: justify;
 }
 
-.bigcart{
-	background:url(../images/sprite.png);
+.bigcart {
+	background: url(../images/sprite.png);
 	background-position: 0px 11px;
-	background-repeat:no-repeat;
+	background-repeat: no-repeat;
 	width: 155px;
 	height: 120px;
-	margin:0 0 40px 60px;
+	margin: 0 0 40px 60px;
 }
 
 
@@ -124,43 +124,43 @@ a:hover {
 	Cart items list
 -----------------------------------*/
 
-.col-md-7.col-sm-12{
-	padding-left: 50px ;
+.col-md-7.col-sm-12 {
+	padding-left: 50px;
 	margin-bottom: 72px;
 }
 
-.row{
+.row {
 	box-shadow: 0 1px 0 #e1e5e8;
-	padding-bottom :0;
+	padding-bottom: 0;
 	padding-left: 15px;
 	background-color: #ffffff;
 	margin-bottom: 11px;
 }
 
-.row span{
-	padding: 20px 0 6px 0;
+.row span {
+	padding: 18px 0 8px 0;
 }
 
 /* Column Captions */
 
-.columnCaptions{
+.columnCaptions {
 	color: #7e93a7;
-	font-size:12px;
+	font-size: 12px;
 	text-transform: uppercase;
 	padding: 0;
 	box-shadow: 0 0 0;
 	background-color: #f2f6f9;
 }
 
-.columnCaptions span:first-child{
-	padding-left:8px;
+.columnCaptions span:first-child {
+	padding-left: 8px;
 }
 
-.columnCaptions span{
+.columnCaptions span {
 	padding: 0 21px 0 0;
 }
 
-.columnCaptions span:last-child{
+.columnCaptions span:last-child {
 	float: right;
 	padding-right: 72px;
 }
@@ -168,46 +168,46 @@ a:hover {
 
 /* Items */
 
-.itemName{
+.itemName {
 	color: #727578;
-	font-size :16px;
+	font-size: 16px;
 	font-weight: bold;
 	float: left;
-	padding-left:25px;
+	padding-left: 25px;
 }
 
 
-.quantity{	
+.quantity {
 	color: #4ea6bc;
-	font-size :18px;
+	font-size: 18px;
 	font-weight: bold;
-	float : left;
+	float: left;
 	width: 42px;
 	padding-left: 7px;
 }
 
 
-.popbtn{
+.popbtn {
 	background-color: #e6edf3;
 	margin-left: 25px;
-	height: 63px;
-	width: 40px;
-	padding: 32px 0 0 14px !important;
+	height: 56px;
+	width: 100px;
+	padding: 0 0 0px 0px !important;
 	float: right;
 	cursor: pointer;
 }
 
-.arrow{
-	width: 0; 
-	height: 0; 
+.arrow {
+	width: 0;
+	height: 0;
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
 	border-top: 6px solid #858e97;
 }
 
-.price{
+.price {
 	color: #f06953;
-	font-size :18px;
+	font-size: 18px;
 	font-weight: bold;
 	float: right;
 }
@@ -215,31 +215,31 @@ a:hover {
 
 /* Totals */
 
-.totals{
+.totals {
 	background-color: #f2f6f9;
 }
 
-.totals span{
+.totals span {
 	padding: 40px 15px 40px 0;
 }
 
-.totals .price{
+.totals .price {
 	float: left;
 }
 
-.totals .itemName{
+.totals .itemName {
 	margin-top: 1px;
 }
 
-.totals .order{
+.totals .order {
 	float: right;
 	padding: 0;
-	margin-top: 40px; 
+	margin-top: 40px;
 	padding-left: 5px;
 	cursor: pointer;
 }
 
-.order a{
+.order a {
 	background-color: #f08573;
 	color: #fbfffa;
 	font-weight: bold;
@@ -250,29 +250,29 @@ a:hover {
 
 /* Popovers */
 
-.popover{
+.popover {
 	border-radius: 3px;
-	box-shadow: 0 0 1px 1px rgba(0,0,0,0.2);
+	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
 	border: 0;
 	background-color: #ffffff;
 }
 
-.popover.bottom{
+.popover.bottom {
 	margin-top: -9px;
 }
 
-.glyphicon{
+.glyphicon {
 	width: 24px;
 	font-size: 24px;
 	padding: 0;
 }
 
-.glyphicon-pencil{
+.glyphicon-pencil {
 	color: #858e97;
-	margin: 7px 12px 7px 10px;
+	margin: 0px 20px 7px 15px;
 }
 
-.glyphicon-remove{
+.glyphicon-remove {
 	color: #f06953;
 	margin-right: 10px;
 }
@@ -285,33 +285,33 @@ a:hover {
 
 @media (max-width: 992px) {
 
-	.container.text-center{
+	.container.text-center {
 		padding: 0 15px;
 	}
 
-	.breadcrumb{
+	.breadcrumb {
 		margin-bottom: 32px;
 	}
 
-	.bigcart{
+	.bigcart {
 		margin: 0 auto 40px auto;
 	}
 
-	.col-md-5.col-sm-12 h1{
+	.col-md-5.col-sm-12 h1 {
 		text-align: center;
 	}
 
-	.col-md-5.col-sm-12 p{
+	.col-md-5.col-sm-12 p {
 		margin: 0 auto 64px auto;
 		text-align: justify;
 	}
 
-	.col-md-7.col-sm-12{
-		padding-left: 10px ;
+	.col-md-7.col-sm-12 {
+		padding-left: 10px;
 		padding-right: 50px;
 	}
 
-	.totals{
+	.totals {
 		box-shadow: 0 0 0;
 	}
 
@@ -322,87 +322,112 @@ a:hover {
 
 @media (max-width: 768px) {
 
-	.navbar{ 
-		padding:10px 0;
+	.navbar {
+		padding: 10px 0;
 	}
-	
-	.minicart{
+
+	.minicart {
 		margin-right: -1px;
 		padding-right: 0;
 	}
 
-	.navbar-brand{
+	.navbar-brand {
 		padding-left: 0;
 	}
 
-	.breadcrumbBox{
-		height:80px;
-		padding-top:21px;
+	.breadcrumbBox {
+		height: 80px;
+		padding-top: 21px;
 	}
 
-	.col-md-5.col-sm-12 p{
+	.col-md-5.col-sm-12 p {
 		max-width: 300px;
 	}
 
-	.col-md-7.col-sm-12{
+	.col-md-7.col-sm-12 {
 		padding-left: 0;
 		padding-right: 15px;
 		margin-bottom: 32px;
 	}
 
-	.col-md-7.col-sm-12 ul{
-		padding-left: 15px ;
+	.col-md-7.col-sm-12 ul {
+		padding-left: 15px;
 	}
 
-	.columnCaptions span{
+	.columnCaptions span {
 		padding: 0 21px 0 0;
 	}
 
-	.columnCaptions span:last-child{
+	.columnCaptions span:last-child {
 		float: right;
 		padding-right: 42px;
 	}
 
-	.row{
-		padding-bottom:10px;
+	.row {
+		padding-bottom: 10px;
 	}
 
-	.quantity{	
+	.quantity {
 		width: 23px;
 		padding-right: 40px !important;
 	}
 
-	.popbtn{
+	.popbtn {
 		background-color: white;
 		position: absolute;
-		height:40px;
+		height: 40px;
 		right: 0;
 	}
 
-	.price{	
+	.price {
 		position: absolute;
 		right: 42px;
 	}
 
-	.totals{
+	.totals {
 		padding: 0;
 	}
 
-	.totals .price{
+	.totals .price {
 		position: static;
 	}
 
 	/* Change Bootstrap's default popover to make it look nice on a mobile device */
 
-	.popover.bottom>.arrow{
+	.popover.bottom>.arrow {
 		left: auto;
 		margin-left: 0;
 		right: 5px;
 	}
 
-	.popover.bottom{
+	.popover.bottom {
 		margin-top: 7px;
 		margin-left: -40px;
 	}
 
+}
+
+.action-btns {
+	display: flex;
+	justify-content: space-between;
+	width: 80px;
+}
+
+.delete-btn,
+.edit-btn {
+	display: block;
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	background-color: #ff0000;
+	border-radius: 50%;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.delete-btn:hover,
+.edit-btn:hover {
+	background-color: #b30000;
 }

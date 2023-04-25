@@ -1,0 +1,140 @@
+{% load static%}
+
+{% include "../includes/landing_top.html" %}
+
+<body>
+	<div class="bg-img">
+		<!-- banner -->
+		{% include "../includes/banner1.html" %}
+		<!-- //banner -->
+	</div>
+	<!-- single -->
+	<div class="blog">
+		<!-- container -->
+		<div class="container">
+			<div class="col-md-8 blog-top-left-grid">
+				<div class="left-blog left-single">
+					<div class="blog-left">
+						<div class="single-left-left">
+							<p>Posted By <a href="#">Admin</a> &nbsp;&nbsp; on April 27, 2021 &nbsp;&nbsp; <a
+									href="#">Comments (10)</a></p>
+							<h1 style="text-align: center; color: orangered;">{{dish.name}}</h1>
+							<img src="/media/{{dish.image}}" alt="" height="600">
+						</div>
+						<div class="blog-left-bottom">
+							<h2 style="color: red;"><i class="fa fa-dollar"></i>{{dish.price}}</h2>
+							<p>One of the best food of Restaurant</p>
+						</div>
+						<!-- <a href="{}">
+							<button class="btn btn-primary">Add to Cart</button>
+						</a> -->
+						<form action="{% url 'res:addTocart' dish.id request.user.id %}" method="post"
+							class="form-inline">
+							{% csrf_token %}
+							<div class="form-group mr-2">
+								<label for="quantity">Quantity:</label>
+								<input type="number" class="form-control" id="quantity" name="quantity" value="1"
+									min="1">
+								<label for="quantity">Special requirement:</label>
+								<input type="text" class="form-control" id="requirement" name="requirement">
+							</div>
+							<button type="submit" class="btn btn-primary">Add to Cart</button>
+						</form>
+					</div>
+					<div class="response">
+						<h3>Responses</h3>
+						<div class="media response-info">
+							<div class="media-left response-text-left">
+								<a href="#">
+									<img class="media-object" src="{% static 'images/t1.jpg' %}" alt="">
+								</a>
+								<h5><a href="#">Admin</a></h5>
+							</div>
+							<div class="media-body response-text-right">
+								<p>Thank You May God Bless You All</p>
+								<ul>
+									<li>April 27, 2021</li>
+									<li><a href="#">Reply</a></li>
+								</ul>
+								<div class="media response-info">
+									<div class="media-left response-text-left">
+										<a href="#">
+											<img class="media-object" src="{% static 'images/t2.jpg' %}" alt="">
+										</a>
+										<h5><a href="#">Admin</a></h5>
+									</div>
+									<div class="media-body response-text-right">
+										<p>Thank You May God Bless You All</p>
+										<ul>
+											<li>May 27, 2021</li>
+											<li><a href="#">Reply</a></li>
+										</ul>
+									</div>
+									<div class="clearfix"> </div>
+								</div>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="media response-info">
+							<div class="media-left response-text-left">
+								<a href="#">
+									<img class="media-object" src="{% static 'images/t3.jpg' %}" alt="">
+								</a>
+								<h5><a href="#">Admin</a></h5>
+							</div>
+							<div class="media-body response-text-right">
+								<p>Thank You May God Bless You All</p>
+								<ul>
+									<li>April 27, 2021</li>
+									<li><a href="#">Reply</a></li>
+								</ul>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+
+					<div class="opinion">
+						<h2>Leave Your Comment</h2>
+						<form action="#" method="post">
+							<input type="text" name="Name" placeholder="Name" required="">
+							<input type="text" name="Email" placeholder="Email" required="">
+							<textarea name="Message" placeholder="Message" required=""></textarea>
+							<input type="submit" value="SEND">
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 blog-top-right-grid">
+				<div class="categories">
+					<h3>Menu</h3>
+					<ul>
+						<li><a href="{% url 'res:menu_details' 1 %}">Foods</a></li>
+						<li><a href="{% url 'res:menu_details' 2 %}">Drinks</a></li>
+						<li><a href="{% url 'res:menu_details' 3 %}">Refresments</a></li>
+						<li><a href="{% url 'res:menu_details' 4 %}">Sale off dishes</a></li>
+					</ul>
+				</div>
+				<div class="categories">
+					<h3>Archive</h3>
+					<ul class="marked-list offs1">
+						<li><a href="#">January 2021 (7)</a></li>
+						<li><a href="#">February 2021 (11)</a></li>
+						<li><a href="#">March 2021 (12)</a></li>
+						<li><a href="#">April 2021 (14)</a> </li>
+						<li><a href="#">May 2021 (10)</a></li>
+						<li><a href="#">June 2021 (12)</a></li>
+						<li><a href="#">July 2021 (8)</a></li>
+						<li><a href="#">August 2021 (7)</a> </li>
+						<li><a href="#">September 2021 (8)</a></li>
+						<li><a href="#">October 2021 (6)</a></li>
+						<li><a href="#">November 2021 (6)</a></li>
+						<li><a href="#">December 2021 (6)</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<!-- //container -->
+	</div>
+	<!-- //single -->
+	{% include "../includes/footer.html" %}
