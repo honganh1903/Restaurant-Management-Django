@@ -11,4 +11,5 @@ urlpatterns = [
     re_path(r'^dashboard/customer_list/$',customer_list, name='customer_list'),
     re_path(r'^dashboard/employee_list$',employee_list, name='employee_list'),
     re_path(r'^dashboard/cart_list$',cart_list, name='cart_list'),
+    re_path(r'^$', home, name='home'),
 ]
