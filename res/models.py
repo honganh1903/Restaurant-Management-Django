@@ -24,7 +24,7 @@ class Employee(models.Model):
     number_phone = models.TextField(max_length=10)
     username = User.username
     password = User.password
-
+    name = str(User.first_name) + " " +str(User.last_name)
     def __str__(self):
         return self.employee.first_name + " " + self.employee.last_name
 

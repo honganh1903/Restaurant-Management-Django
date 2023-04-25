@@ -20,4 +20,11 @@ urlpatterns = [
             addTocart, name='addTocart'),
     re_path(r'^delete_item/(?P<ID>\d+)/$', delete_item, name='delete_item'),
     re_path(r'^edit_item/(?P<ID>\d+)/$', edit_item, name='edit_item'),
+    re_path(r'^dashboard$', dashboard, name='dashboard'),
+    re_path(r'^dashboard/add_dish/$', add_dish, name='add_dish'),
+    re_path(r'^dashboard/edit_dish/(?P<dishID>\d+)/$',
+            edit_dish, name='edit_dish'),
+    re_path(r'^dashboard/delete_dish/(?P<dishID>\d+)/$',
+            delete_dish, name='delete_dish'),
+    re_path(r'^dashboard/cart_list$', cart_list, name='cart_list'),
 ]
