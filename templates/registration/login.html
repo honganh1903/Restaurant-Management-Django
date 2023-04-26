@@ -50,6 +50,9 @@
                                     <input class="form-control" placeholder="Password" name="password" type="password"
                                         value="" required>
                                 </div>
+                                {% for error in messages %}
+                                    <p>{{ error }}</p><br>
+                                {% endfor %}
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button type="submit" name="submit"
                                     class="btn btn-lg btn-success btn-block">Login</button>

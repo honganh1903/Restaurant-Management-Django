@@ -1,4 +1,5 @@
 from .models import *
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
@@ -45,9 +46,9 @@ def Login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        check = user.is_staff
+        user = authenticate(request, username=username, password=password)       
         if user is not None:
+            check = user.is_staff
             if check :
                 form = login(request,user)
                 return redirect('dashboard')
@@ -55,7 +56,8 @@ def Login(request):
                 form = login(request,user)            
                 return redirect('home')
         else:
-            return render()
+            messages.error(request, 'Please check your username and password again !')
+            return redirect('/accounts/login')
     return render(request, 'registration/login.html')
 
 # DISH
@@ -268,7 +270,7 @@ def edit_employee(request, employeeID):
         
         return redirect(reverse('res:employee_list'))
     else:
-        return render(request, 'res: edit_employee', {'employee': employee})
+        return render(request, 'res:edit_employee', {'employee': employee})
 
 @login_required
 @staff_member_required
