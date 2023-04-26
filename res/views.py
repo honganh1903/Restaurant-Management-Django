@@ -236,29 +236,24 @@ def delete_employee(request, employeeID):
 def cart_detail(request,cartID): 
     detail = []
     total = 0
-    orders = Order.objects.filter(cart_id=cartID)
+    orders = Order.objects.filter(cart_id=3)
     for order in orders:
-        
-        order_detail = {}
-        dish = Dish.objects.get(id = order.food_id)
-        total = total + dish.price * order.amount
-        order_detail[dish] = [order.details,order.amount]
-        detail.append(order_detail)
-    total1 = {"total": total}
-    detail.append(total1)
-    for item in detail :
-        for dish, k in item.items():
-            if dish != 'total':
-                for y in k:
-                    print(y)
-            else :
-                print(k)
+        1
+        # order_detail = {}
+        # dish = Dish.objects.get(id = order.food_id)
+        # total = total + dish.price * order.amount
+        # order_detail[dish] = [order.details,order.amount]
+        # detail.append(order_detail)
+    # total1 = {"total": total}
+    # detail.append(total1)
+    # for item in detail :
+    #     for dish, k in item.items():
+    #         if dish != 'total':
+    #             for y in k:
+    #                 print(y)
+    #         else :
+    #             print(k)
     return render(request, 'admin/cart_detail.html', {'detail': detail})
-
-def order_list(request):
-    orders = Order.objects.all()
-    return render(request, 'admin/order.html', {'orders': orders})
-
 
 def home(request):
     last_item = Menu.objects.last()
@@ -342,9 +337,9 @@ def cart_list(request):
         customers = Customer.objects.filter(id=elm.employee_id)
         list_idcart.append(elm.id)
     return render(request, 'admin/cart.html', {'list_idcart': list_idcart, 'customers': customers})
-def delete_dish_in_cart(request, dishID,cartID):
-    cart = Cart.objects.get(id=cartID)
-    item = Dish.objects.get(id=dishID)
+def delete_dish_in_cart(request, cartID,dishID):
+    cart = Cart.objects.get(id = cartID)
+    item = Dish.objects.get(id = dishID)
     if request.method == 'POST':
         print('Delete')
         item.delete()
