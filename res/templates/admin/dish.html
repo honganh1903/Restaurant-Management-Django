@@ -41,9 +41,10 @@
                                     <label for="menu">Menu:</label>
                                     <select class="dropdown" id="menu" name="menu">
                                         <option selected="selected">------</option>
-                                        <option value="Refreshment">Disabled</option>
-                                        <option value="Drink">Enabled</option>
-                                        <option value="Food">Enabled</option>
+                                        <option value="Refreshments">Refreshments</option>
+                                        <option value="Drinks">Drinks</option>
+                                        <option value="Foods">Foods</option>
+					<option value="Sale off Dishes">Sale off Dishes</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -135,9 +136,10 @@
                                                         <div class="form-group">
                                                             <label for="menu">Menu:</label>
                                                             <select class="dropdown" id="menu" name="menu">
-                                                                <option value="Refreshment" {% if dish.menu.type == "Refreshment" %}selected{% endif %}>Refreshment</option>
-                                                                <option value="Drink" {% if dish.menu.type == "Drink" %}selected{% endif %}>Drink</option>
-                                                                <option value="Food" {% if dish.menu.type == "Food" %}selected{% endif %}>Food</option>
+                                                                <option value="Refreshments" {% if dish.menu.type == "Refreshments" %}selected{% endif %}>Refreshments</option>
+                                                                <option value="Drinks" {% if dish.menu.type == "Drinks" %}selected{% endif %}>Drinks</option>
+                                                                <option value="Foods" {% if dish.menu.type == "Foods" %}selected{% endif %}>Foods</option>
+								<option value="Sale off Dishes" {% if dish.menu.type == "Sale off Dishes" %}selected{% endif %}>Sale off Dishes</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
