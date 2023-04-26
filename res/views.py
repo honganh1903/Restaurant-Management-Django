@@ -4,11 +4,6 @@ from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-<< << << < HEAD
-# from .forms import DishForm
-== == == =
-
->>>>>> > b4a3c8112d106006421a7c71a87e8d22ec9674bc
 
 
 @login_required
@@ -17,17 +12,6 @@ def dashboard(request):
     return render(request, 'admin/dashboard.html')
 
 # DISH
-
-
-<< << << < HEAD
-#             return redirect('/admin/dish_list') # Điều hướng sau khi thêm món ăn thành công
-#     else:
-#         form = DishForm()
-#     return render(request, 'admin/add_dish.html', {'form': form})
-def dish_list(request):
-
-
-== == == =
 
 
 def add_dish(request):
@@ -53,11 +37,8 @@ def add_dish(request):
 
 
 def dish_list(request):
-
-
->>>>>> > b4a3c8112d106006421a7c71a87e8d22ec9674bc
-dishes = Dish.objects.all()
-return render(request, 'admin/dish.html', {'dishes': dishes})
+    dishes = Dish.objects.all()
+    return render(request, 'admin/dish.html', {'dishes': dishes})
 
 
 @login_required
@@ -132,20 +113,8 @@ def home(request):
 
 
 def menu(request):
-    # cuisine = request.GET.get('cuisine')
-    # # print(cuisine)
-    # if cuisine is not None:
-    #     if ((cuisine == "Gujarati") or (cuisine == "Punjabi")):
-    #         foods = Dish.objects.filter(status="Enabled", course=cuisine)
-    #     elif (cuisine == "south"):
-    #         foods = Dish.objects.filter(
-    #             status="Enabled", course="South Indian")
-    #     elif (cuisine == "fast"):
-    #         foods = Dish.objects.filter(course="Fast")
-    # else:
     menu = Menu.objects.all()
     return render(request, 'res/menu.html', {'menu': menu})
-    # , 'cuisine': cuisine
 
 
 @login_required
