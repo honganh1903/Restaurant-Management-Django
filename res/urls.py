@@ -22,7 +22,6 @@ urlpatterns = [
     re_path(r'^dashboard/add_dish/$',add_dish, name='add_dish'),
     re_path(r'^dashboard/edit_dish/(?P<dishID>\d+)/$',edit_dish, name='edit_dish'),
     re_path(r'^dashboard/delete_dish/(?P<dishID>\d+)/$',delete_dish, name='delete_dish'),
-    re_path(r'^dashboard/delete_dish_in_cart/(?P<cartID>\d+)/(?P<dishID>\d+)/$',delete_dish_in_cart, name='delete_dish_in_cart'),
 
     # Customer routes
     
@@ -39,5 +38,6 @@ urlpatterns = [
     # Cart routes
     re_path(r'^dashboard/cart_list$',cart_list, name='cart_list'),
     re_path(r'^dashboard/cart_detail/(?P<cartID>\d+)/$',cart_detail, name='cart_detail'),
-    re_path(r'^show_html$', show_html, name='show_html'),
+    re_path(r'^dashboard/edit_cart/(?P<cartID>\d+)/$',edit_cart, name='edit_cart'),
+    re_path(r'^delete_item_in_cart/(?P<ID>\d+)/(?P<cartID>\d+)/$', delete_item_in_cart, name='delete_item_in_cart'),
 ]
