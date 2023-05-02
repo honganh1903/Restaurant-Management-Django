@@ -7,6 +7,15 @@
 </nav>
 
 <div id="page-wrapper">
+    <!-- Main Content -->
+    <div id="content">
+
+        {% include 'includes/messages.html' %}
+
+        {% block content %}  {% endblock content %}
+        
+      </div>
+    <!-- End of Main Content --> 
     {% if error_msg %}
         <div class="alert alert-danger">{{ error_msg }}</div>
     {% endif %}
