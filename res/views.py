@@ -311,20 +311,8 @@ def home(request):
 
 
 def menu(request):
-    # cuisine = request.GET.get('cuisine')
-    # # print(cuisine)
-    # if cuisine is not None:
-    #     if ((cuisine == "Gujarati") or (cuisine == "Punjabi")):
-    #         foods = Dish.objects.filter(status="Enabled", course=cuisine)
-    #     elif (cuisine == "south"):
-    #         foods = Dish.objects.filter(
-    #             status="Enabled", course="South Indian")
-    #     elif (cuisine == "fast"):
-    #         foods = Dish.objects.filter(course="Fast")
-    # else:
     menu = Menu.objects.all()
     return render(request, 'res/menu.html', {'menu': menu})
-    # , 'cuisine': cuisine
 
 
 @login_required
@@ -343,7 +331,8 @@ def dish_details(request, id):
 @login_required
 def addTocart(request, dishID, userID):
     dish = Dish.objects.get(id=dishID)
-    cart = Cart.objects.get(id=1)
+    # cart = Cart.objects.get(id=1)
+    cart = Cart.objects.get(customer_id=userID)
     quantity = request.POST.get('quantity', 1)
     requirement = request.POST.get('requirement', "")
     order = Order.objects.create(
@@ -372,7 +361,8 @@ def edit_item(request, ID):
 @login_required
 def order(request):
     # user = User.objects.get(id=request.user.id)
-    items = Order.objects.filter(cart_id=1)
+    cart = Cart.objects.get(customer_id=request.user.id)
+    items = Order.objects.filter(cart=cart)
     total = 0
     for item in items:
         total += item.dish.price*item.amount
