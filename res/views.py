@@ -6,7 +6,6 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import *
 from datetime import datetime
-from django.contrib import messages
 
 from .forms import *
 
@@ -28,14 +27,19 @@ def signup(request):
             user.first_name = form.cleaned_data['firstname']
             user.last_name = form.cleaned_data['lastname']
             user.email = form.cleaned_data['email']
-            user.username = user.email.split('@')[0]
+            user.username = user.email
             user.set_password(form.cleaned_data['password'])
-            user.save()
-            address = form.cleaned_data['address']
-            number_phone = form.cleaned_data['number_phone']
-            customer = Customer.objects.create(
-                customer=user, address=address, number_phone=number_phone)
-            customer.save()
+            user = authenticate(request, username=user.username)
+            if user is not None:
+                user.save()
+                address = form.cleaned_data['address']
+                number_phone = form.cleaned_data['number_phone']
+                customer = Customer.objects.create(
+                    customer=user, address=address, number_phone=number_phone)
+                customer.save()
+            else:
+                messages.error(request, 'Email is available')
+                return redirect('http://localhost:8000/accounts/signup')
             return redirect('http://localhost:8000/accounts/login')
 
     else:
@@ -55,7 +59,7 @@ def Login(request):
                 return redirect('dashboard')
             else:   
                 form = login(request,user)            
-                return redirect('home')
+                return redirect('res:home')
         else:
             messages.error(request, 'Please check your username and password again !')
             return redirect('/accounts/login')
@@ -390,7 +394,7 @@ def menu(request):
     return render(request, 'res/menu.html', {'menu': menu})
 
 
-@login_required
+# @login_required
 def menu_details(request, id):
     menu = Menu.objects.get(id=id)
     dishes = Dish.objects.filter(menu=menu)
@@ -485,6 +489,36 @@ def profile(request):
     user = User.objects.get(id = request.user.id)
     customer = Customer.objects.get(customer = user)
     return render(request, 'res/profile.html', {'customer' : customer})
+@login_required
+def edit_profile(request, ID):
+    customer = Customer.objects.get(id = ID)
+    if request.method == "POST":
+        customer.customer.first_name = request.POST['firstname']
+        customer.customer.last_name = request.POST['lastname']
+        customer.customer.email = request.POST['email']
+        customer.address = request.POST['address']
+        customer.number_phone = request.POST['phonenumber']
+        customer.customer.username = request.POST['username']
+        customer.save()
+    return render(request, 'res/profile.html', {'customer' : customer})
+
+def change_password(request, ID):
+    customer = Customer.objects.get(id = ID)
+    username = customer.customer.username
+    if request.method == 'POST':
+        curentpassword = request.POST.get('curentpassword')
+        newpassword = request.POST.get('newpassword')
+        user = authenticate(request, username=username, password=curentpassword)
+        if user is not None:
+            user.set_password(newpassword)
+            user.save()
+            messages.success(request, f'Change Password Successful! Please login again.')
+            return redirect('/accounts/login')
+        else:
+            messages.error(request, 'Update password failed! Please check your username and password again !')
+            return render(request, 'res/profile.html', {'customer' : customer})
+    return render(request, 'res/profile.html', {'customer' : customer})
+
 
 def delete_dish_in_cart(request, cartID,dishID):
     cart = Cart.objects.get(id = cartID)
