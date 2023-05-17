@@ -60,7 +60,7 @@ urlpatterns = [
     # Cart routes
 
     re_path(r'^dashboard/cart_list$',cart_list, name='cart_list'),
-#     re_path(r'^dashboard/cart_detail/(?P<cartID>\d+)/(?P<status>\d+)/$',cart_detail_admin, name='cart_detail_admin'),
+    re_path(r'^dashboard/cart_detail/(?P<cartID>\d+)/$',cart_detail, name='cart_detail'),
     re_path(r'^dashboard/edit_cart/(?P<cartID>\d+)/$',edit_cart, name='edit_cart'),
     re_path(r'^delete_item_in_cart/(?P<ID>\d+)/(?P<cartID>\d+)/$', delete_item_in_cart, name='delete_item_in_cart'),    
 ]

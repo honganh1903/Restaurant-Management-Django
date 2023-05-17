@@ -338,7 +338,7 @@ def delete_employee(request, employeeID):
 
 @login_required
 @staff_member_required
-def cart_detail_admin(request, cartID, status):
+def cart_detail(request, cartID):
     detail = []
     total = 0
     orders = Order.objects.filter(cart_id=cartID)
@@ -350,7 +350,7 @@ def cart_detail_admin(request, cartID, status):
         detail.append(order_detail)
     total1 = {"total": total}
     detail.append(total1)
-    return render(request, 'admin/cart_detail.html', {'detail': detail,'cartID' :cartID,'status':status})
+    return render(request, 'admin/cart_detail.html', {'detail': detail, 'cartID': cartID})
 
 @login_required
 @staff_member_required
@@ -375,6 +375,7 @@ def edit_cart(request, cartID):
 @staff_member_required
 def cart_list(request):
     carts = Cart.objects.all()
+    print(carts)
     return render(request, 'admin/cart.html', {'carts': carts})
 
 @login_required
