@@ -30,8 +30,9 @@ def signup(request):
             user.email = form.cleaned_data['email']
             user.username = user.email
             user.set_password(form.cleaned_data['password'])
-            user = authenticate(request, username=user.username)
-            if user is not None:
+            
+            user_check = authenticate(request, username = user.username)
+            if user_check is None:
                 user.save()
                 address = form.cleaned_data['address']
                 number_phone = form.cleaned_data['number_phone']
