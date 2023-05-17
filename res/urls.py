@@ -20,10 +20,12 @@ urlpatterns = [
     re_path(r'^order/$', order, name='order'),
     re_path(r'^addTocart/(?P<dishID>\d+)/(?P<userID>\d+)/$',
             addTocart, name='addTocart'),
+    re_path(r'^list_invoice/$',list_invoice, name='list_invoice'),
+    re_path(r'^invoice_details/(?P<cartID>\d+)/$',invoice_details, name='invoice_details'),
     re_path(r'^placeOrder/$',placeOrder, name='placeOrder'),
     re_path(r'^delete_item/(?P<ID>\d+)/$', delete_item, name='delete_item'),
     re_path(r'^edit_item/(?P<ID>\d+)/$', edit_item, name='edit_item'),
-
+    re_path(r'^profile/$', profile, name='profile'),
     re_path(r'^dashboard$', dashboard, name='dashboard'),
 
     # Dish routes

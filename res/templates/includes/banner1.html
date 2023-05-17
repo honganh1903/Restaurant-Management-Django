@@ -17,7 +17,8 @@
 							<li><a href="{% url 'res:home' %}">Home</a></li>
 							<li><a href="{% url 'res:menu' %}">Menu</a></li>
 							{% if user.is_authenticated %}
-							<li><a href="{% url 'res:dashboard' %}">My Order</a></li>
+							<li><a href="{% url 'res:list_invoice' %}">My Order</a></li>
+							<li><a href="{% url 'res:profile' %}">Profile</a></li>
 							<li><a href="/accounts/logout/">Logout</a></li>
 							{% else %}
 							<li><a href="/accounts/login/">Login</a></li>
