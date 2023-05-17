@@ -71,17 +71,17 @@ class Dish(models.Model):
 
 class Cart(models.Model):
     pending = 'Pending'
+    processing = 'Processing'
     completed = 'Completed'
     STATUS = (
         (pending, pending),
         (completed, completed),
     )
-    pickup = 'PickUp'
     delivery = 'Delivery'
-
+    pickup = 'Pickup'
     TYPE = (
-        (pickup, pickup),
         (delivery, delivery),
+        (pickup, pickup),
     )
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     # order = models.ForeignKey(Order, on_delete=models.CASCADE)
