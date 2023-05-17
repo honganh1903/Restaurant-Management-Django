@@ -61,7 +61,8 @@ def Login(request):
 
 # DISH
 
-
+@login_required
+@staff_member_required
 def add_dish(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -80,17 +81,20 @@ def add_dish(request):
         if Dish.objects.filter(name=name).exists():
             dishs = Dish.objects.filter()
             messages.error(request, "Dish with this name already exists.")
-            return redirect(reverse('res:dish_list'))
+            return redirect(reverse('res:dish_list', {'dishs': dishs}))
 
         if Dish.objects.filter(image=filename).exists():
             dishs = Dish.objects.filter()
             messages.error(request, "Dish with this image already exists.")
-            return redirect(reverse('res:dish_list'))
+            return redirect(reverse('res:dish_list', {'dishs': dishs}))
         dish = Dish.objects.create(name=name,  status=status, menu=menu_instance,
                                    price=price, image=filename)
+        
+        messages.success(request, f"Created customer {dish} successfully")
+        
         dish.save()
         dishs = Dish.objects.filter()
-    return redirect(reverse('res:dish_list'))
+    return redirect(reverse('res:dish_list', {'dishs': dishs}))
 
 
 def dish_list(request):
@@ -104,22 +108,31 @@ def edit_dish(request, dishID):
     dish = Dish.objects.get(id=dishID)
 
     if request.method == "POST":
-        print('Update')
-        dish.name = request.POST.get('name', dish.name)
-        dish.menu = Menu.objects.get(
-            type=request.POST.get('menu', dish.menu.type))
+        nameEdit = request.POST.get('name', dish.name)
+        if Dish.objects.filter(name=nameEdit).exists():
+            dishs = Dish.objects.filter()
+            messages.error(request, "Dish with this name already exists.")
+            return redirect(reverse('res:dish_list', {'dishs': dishs}))
 
         status = request.POST.get('status')
         if status:
             dish.status = status
 
-        dish.price = request.POST.get('price', dish.price)
-
         image = request.FILES.get('image-edit')
         if image:
             dish.image = image
 
+        dish.price = request.POST.get('price', dish.price)
+
+        dish.menu = Menu.objects.get(
+        type=request.POST.get('menu', dish.menu.type))
+
+        dish.name = nameEdit
+
+        messages.success(request, f"Created customer {dish} successfully")
+
         dish.save()
+
     return redirect(reverse('res:dish_list'))
 
 
@@ -127,9 +140,11 @@ def edit_dish(request, dishID):
 @staff_member_required
 def delete_dish(request, dishID):
     item = Dish.objects.get(id=dishID)
-    if request.method == 'POST':
-        print('Delete')
+    if (request.method != 'POST') or item is None:
+        messages.error(request, f"Not found dish has ID: {dishID}")
+    else:
         item.delete()
+        messages.success(request, f"Delete dish has ID: {dishID}")
     return redirect(reverse('res:dish_list'))
 
 # CUSTOMER
@@ -211,19 +226,20 @@ def edit_customer(request, customerID):
 @login_required
 @staff_member_required
 def delete_customer(request, customerID):
-    if request.method == 'POST':
-        customer = Customer.objects.get(id=customerID)
+    customer = Customer.objects.get(id=customerID)
+    if request.method != 'POST' and customer is None:
+        messages.error(request, "Customer is not found !!!")
+
+    else:
         customer.customer.delete()
         customer.delete()
         messages.success(request, "Delete customer successfully !!!")
         return redirect(reverse('res:customer_list'))
-    else:
-        return render(request, 'res:delete_customer', {'customer': customer})
+    return render(request, 'res:delete_customer', {'customer': customer})
 
 
 # EMPLOEE
 @login_required
-@staff_member_required
 def employee_list(request):
     employees = Employee.objects.all()
 
@@ -364,7 +380,7 @@ def delete_item_in_cart(request, ID,cartID):
 def home(request):
     last_item = Menu.objects.last()
     menu = Menu.objects.exclude(id=last_item.id)
-    return render(request, 'admin/menu.html', {'menu': menu})
+    return render(request, 'res/home.html', {'menu': menu})
 
 
 def menu(request):
