@@ -84,7 +84,6 @@ class Cart(models.Model):
         (pickup, pickup),
     )
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    # order = models.ForeignKey(Order, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     is_delivery = models.BooleanField(default="False")
     is_paid = models.BooleanField(default="False")

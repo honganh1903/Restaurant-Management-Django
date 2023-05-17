@@ -96,8 +96,10 @@
                                         <p>Food</p>
                                     {% elif dish.menu_id == 2 %}
                                         <p>Drink</p>
-                                    {% else %}
+                                    {% elif dish.menu_id == 3 %}
                                         <p>Refreshment</p>
+                                    {% else %}
+                                        <p>Sale off Dishes</p>
                                     {% endif %}
                                 </td>
                                 <td>{% if dish.status == 'Enabled' %}
@@ -139,7 +141,7 @@
                                                                 <option value="Refreshments" {% if dish.menu.type == "Refreshments" %}selected{% endif %}>Refreshments</option>
                                                                 <option value="Drinks" {% if dish.menu.type == "Drinks" %}selected{% endif %}>Drinks</option>
                                                                 <option value="Foods" {% if dish.menu.type == "Foods" %}selected{% endif %}>Foods</option>
-								<option value="Sale off Dishes" {% if dish.menu.type == "Sale off Dishes" %}selected{% endif %}>Sale off Dishes</option>
+								                                <option value="Sale off Dishes" {% if dish.menu.type == "Sale off Dishes" %}selected{% endif %}>Sale off Dishes</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
@@ -159,9 +161,7 @@
                                                         data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
-                                            
                                     </div>
-                                    
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{dish.id}}">

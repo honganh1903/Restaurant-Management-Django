@@ -40,9 +40,9 @@
                                 <td>{{cart.status}}</td>
                                 <td>{{cart.date}}</td>
                                 <td>
-                                    <a href="{% url 'res:cart_detail' cart.id %}" class="btn btn-primary">
+                                    <a href="{% url 'res:cart_detail' cart.id cart.status %}" class="btn btn-primary">
                                         View Details
-                                      </a>
+                                    </a>
                                   </td>
                                 <td>    
                             </tr>

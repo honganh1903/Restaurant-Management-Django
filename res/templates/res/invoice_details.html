@@ -1,0 +1,58 @@
+{% load static%}
+
+{% include "includes/landing_top.html" %}
+
+{% load mathfilters %}
+
+<body>
+	<div class="bg-img">
+		<!-- banner -->
+		{% include "includes/banner1.html" %}
+		<!-- //banner -->
+	</div>
+
+
+	<div style="height:100px;"></div>
+
+	<div class="container text-center">
+
+		<div class="col-md-5 col-sm-12">
+			<div class="bigcart"></div>
+			<h1>Your shopping cart</h1>
+		</div>
+
+		<div class="col-md-7 col-sm-12 text-left">
+			<ul>
+				<li class="row list-inline columnCaptions">
+					<span>QTY</span>
+					<span>ITEM</span>
+					<span>Price</span>
+				</li>
+				{% for item in items %}
+				<li class="row">
+					<span class="quantity">{{item.amount}}</span>
+					<span class="itemName">{{item.dish.name}}</span>
+					<!-- <span class="popbtn">
+						<a><span class="glyphicon glyphicon-pencil" data-toggle="modal"
+								data-target="#myModal{{item.id}}"></span></a>
+						<a href="{% url 'res:delete_item' item.id %}"><span
+								class="glyphicon glyphicon-remove"></span></a>
+					</span> -->
+					<span class="price">₱ {{ item.dish.price|mul:item.amount }}</span>
+				</li>
+				{% endfor %}
+				<li class="row totals">
+					<span class="itemName">Total:</span>
+					<span class="price">₱ {{total}}</span>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="{% static 'js/bootstrap.js' %}"></script>
+	<script src="{% static 'assets/js/customjs.js' %}"></script>
+
+</body>
+
+</html>

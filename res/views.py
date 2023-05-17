@@ -11,7 +11,7 @@ from django.contrib import messages
 from .forms import *
 
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 
 @login_required
 @staff_member_required
@@ -197,7 +197,7 @@ def add_customer(request):
             customer=user, address=address, number_phone=number_phone)
         customer.save()
 
-        user.is_staff = True
+        user.is_staff = False
         user.save()
         messages.success(request, f"Created customer {customer} successfully")
 
@@ -332,7 +332,7 @@ def delete_employee(request, employeeID):
 
 @login_required
 @staff_member_required
-def cart_detail(request, cartID):
+def cart_detail_admin(request, cartID, status):
     detail = []
     total = 0
     orders = Order.objects.filter(cart_id=cartID)
@@ -344,7 +344,7 @@ def cart_detail(request, cartID):
         detail.append(order_detail)
     total1 = {"total": total}
     detail.append(total1)
-    return render(request, 'admin/cart_detail.html', {'detail': detail,'cartID' :cartID})
+    return render(request, 'admin/cart_detail.html', {'detail': detail,'cartID' :cartID,'status':status})
 
 @login_required
 @staff_member_required
@@ -402,6 +402,24 @@ def dish_details(request, id):
     dish = Dish.objects.get(id=id)
     return render(request, 'res/dish_details.html', {'dish': dish})
 
+@login_required
+def list_invoice(request):
+    customer = Customer.objects.get(customer_id = request.user.id)
+    # cart = Cart.objects.filter(customer_id=customer, status = 'Completed' or status = 'Processing')
+    items = Cart.objects.filter(Q(customer_id=customer) & (Q(status='Completed') | Q(status='Processing')))
+    # items = Order.objects.filter(cart=cart)
+    return render(request, 'res/list_invoice.html', {'items': items})
+
+@login_required
+def invoice_details(request, cartID):
+    cart = Cart.objects.get(id = cartID)
+    items = Order.objects.filter(cart=cart)
+    total = 0
+    for item in items:
+        total += item.dish.price*item.amount
+    cart.total = total
+    cart.save()
+    return render(request, 'res/invoice_details.html', {'items': items, 'total': total})
 
 @login_required
 def addTocart(request, dishID, userID):
@@ -461,6 +479,12 @@ def placeOrder(request):
     cart.save()
     # return redirect('hotel:cart')
     return render(request, 'res/order_sucess.html')
+
+@login_required
+def profile(request):
+    user = User.objects.get(id = request.user.id)
+    customer = Customer.objects.get(customer = user)
+    return render(request, 'res/profile.html', {'customer' : customer})
 
 def delete_dish_in_cart(request, cartID,dishID):
     cart = Cart.objects.get(id = cartID)

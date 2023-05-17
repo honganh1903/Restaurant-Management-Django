@@ -1,0 +1,97 @@
+{% load static%}
+
+{% include "includes/landing_top.html" %}
+
+{% load mathfilters %}
+
+<body>
+	<div class="bg-img">
+		<!-- banner -->
+		{% include "includes/banner1.html" %}
+		<!-- //banner -->
+	</div>
+
+
+	<div style="height:100px;"></div>
+
+	<div class="container text-center">
+
+		<div class="col-md-5 col-sm-12">
+			<div class="bigcart"></div>
+			<h1>Your invoice</h1>
+		</div>
+
+		<div class="col-md-7 col-sm-12 text-left">
+			<ul>
+				<li class="row list-inline columnCaptions">
+					<span>Status</span>
+					<span>day</span>
+					<span>Total</span>
+				</li>
+				{% for item in items %}
+				<a href="{% url 'res:invoice_details' item.id %}"><li class="row">
+					<span class="status">{{item.status}}</span>
+					<span class="itemName">{{item.date}}</span>
+					<!-- <span class="popbtn">
+						<a><span class="glyphicon glyphicon-pencil" data-toggle="modal"
+								data-target="#myModal{{item.id}}"></span></a>
+						<a href="{% url 'res:delete_item' item.id %}"><span
+								class="glyphicon glyphicon-remove"></span></a>
+					</span> -->
+					<span class="total">₱ {{ item.total}}</span>
+				</li></a>
+				{% endfor %}
+			</ul>
+		</div>
+
+	</div>
+    <style>
+        .status {
+            color: #4ea6bc;
+            font-size: 18px;
+            font-weight: bold;
+            float: left;
+            width: 200px;
+            padding-left: 7px;
+        }	
+        .itemName {
+            color: #727578;
+            font-size: 16px;
+            font-weight: bold;
+            float: left;
+            padding-left: 25px;
+            width:  250px;
+        }
+        .total {
+            color: #f06953;
+            font-size: 18px;
+            font-weight: bold;
+            /* margin-top: 10px; */
+            /* float: right; */
+        }
+        .columnCaptions {
+            color: #7e93a7;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 0;
+            box-shadow: 0 0 0;
+            background-color: #f2f6f9;
+        }
+        .columnCaptions span {
+            padding: 0 21px 0 0;
+        }
+        .columnCaptions span:first-child {
+            padding-left: 8px;
+            padding-right: 200px;
+        }
+    </style>
+    
+	<!-- JavaScript includes -->
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="{% static 'js/bootstrap.js' %}"></script>
+	<script src="{% static 'assets/js/customjs.js' %}"></script>
+
+</body>
+
+</html>

@@ -17,7 +17,7 @@
                 <th>Amount</th>
                 <th>Status</th>
                 <th>Total</th>
-                <th>Remove</th>
+                <!-- <th>Remove</th> -->
             </tr>
         </thead>
         <tbody>
@@ -40,22 +40,18 @@
                             
                             </td>
                             <td>{% widthratio order.0.price 1 order.2 %}</td>
-                            <td>
+                            <!-- <td>
                                 <form action="{% url 'res:delete_item_in_cart' id cartID %}" method="POST" style="position: relative;">
                                 {% csrf_token %}
                                 <button type="submit"class="btn btn-danger" >
                                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </button>      
                               </form>
-                            </td>
-                          <tr>
-                            
-                          </tr>
+                            </td> -->
                             
                         </tr>
                         {%else %}
                             <td colspan="7" style="text-align: right; padding-right:70px;"><p>Total: {{order }}</p></td>
-
                         {%endif %}
 
                     {% endfor %}
