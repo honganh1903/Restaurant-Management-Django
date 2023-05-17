@@ -5,7 +5,9 @@ from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import *
+from datetime import datetime
 from django.contrib import messages
+
 from .forms import *
 
 from django.contrib.auth.decorators import login_required
@@ -404,7 +406,11 @@ def dish_details(request, id):
 @login_required
 def addTocart(request, dishID, userID):
     dish = Dish.objects.get(id=dishID)
-    cart = Cart.objects.get(id=1)
+    customer = Customer.objects.get(customer_id=userID)
+    try:
+        cart = Cart.objects.get(customer_id=customer, status = 'Pending')
+    except Cart.DoesNotExist:
+        cart = Cart.objects.create(customer_id=customer.id, employee_id = 1, date = datetime.now(), status = 'Pending', total = 0)
     quantity = request.POST.get('quantity', 1)
     requirement = request.POST.get('requirement', "")
     order = Order.objects.create(
@@ -437,12 +443,24 @@ def edit_item(request, ID):
 @login_required
 def order(request):
     # user = User.objects.get(id=request.user.id)
-    items = Order.objects.filter(cart_id=1)
+    customer = Customer.objects.get(customer_id = request.user.id)
+    cart = Cart.objects.get(customer_id=customer, status = 'Pending')
+    items = Order.objects.filter(cart=cart)
     total = 0
     for item in items:
         total += item.dish.price*item.amount
+    cart.total = total
+    cart.save()
     return render(request, 'res/cart.html', {'items': items, 'total': total})
 
+@login_required
+def placeOrder(request):
+    customer = Customer.objects.get(customer_id = request.user.id)
+    cart = Cart.objects.get(customer_id=customer, status = 'Pending')
+    cart.status = 'Processing'
+    cart.save()
+    # return redirect('hotel:cart')
+    return render(request, 'res/order_sucess.html')
 
 def delete_dish_in_cart(request, cartID,dishID):
     cart = Cart.objects.get(id = cartID)

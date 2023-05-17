@@ -23,12 +23,10 @@
 
 		<div class="col-md-7 col-sm-12 text-left">
 			<ul>
-				<li class="row list-inline columnCaptions">
-					<span>QTY</span>
-					<span>ITEM</span>
-					<span>Price</span>
+				<li class="row list-inline columnCaptions"> 
+					<span>ORDER SUCESS</span>
 				</li>
-				{% for item in items %}
+				<!-- {% for item in items %}
 				<li class="row">
 					<span class="quantity">{{item.amount}}</span>
 					<span class="itemName">{{item.dish.name}}</span>
@@ -40,37 +38,36 @@
 					</span>
 					<span class="price">₱ {{ item.dish.price|mul:item.amount }}</span>
 				</li>
-				{% endfor %}
-				<li class="row totals">
-					<span class="itemName">Total:</span>
-					<span class="price">₱ {{total}}</span>
-					<span class="order"> <a class="text-center" href="{% url 'res:placeOrder' %}">ORDER</a></span>
-					<!-- url 'hotel:placeOrder' -->
+				{% endfor %} -->
+				<li class="row totals"> 
+					<!-- <span class="itemName">Total:</span>
+					<span class="price">₱ {{total}}</span>  -->
+					<span class="order"> <a class="text-center" href="{% url 'res:home' %} ">Home</a></span>
 					<span class="order"> <a class="text-center" href="{% url 'res:menu' %}">Continue
 							Shopping</a></span>
 				</li>
-			</ul>
+			<!-- </ul> -->
 		</div>
 
 	</div>
 
 	<!-- The popover content -->
-	{% for item in items %}
+	<!-- {% for item in items %}
 
 
 	<div id="myModal{{item.id}}" class="modal fade" role="dialog">
-		<div class="modal-dialog">
+		<div class="modal-dialog"> -->
 
 			<!-- Modal content-->
-			<div class="modal-content">
+			<!-- <div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Edit Food Details</h4>
 				</div>
 				<div class="modal-body">
-					<form method="POST" action="{% url 'res:edit_item' ID=item.id %}">
+					<form method="POST" action="{% url 'res:edit_item' ID=item.id %}"> -->
 						<!-- url 'res:edit_food' food.id -->
-						{% csrf_token %}
+						<!-- {% csrf_token %}
 						<div class="form-group">
 							<label for="name">Name:</label>
 							<input type="text" class="form-control" id="name" name="name" value="{{item.dish.name}}"
@@ -95,7 +92,7 @@
 
 		</div>
 	</div>
-	{% endfor %}
+	{% endfor %} -->
 
 	<!-- JavaScript includes -->
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>

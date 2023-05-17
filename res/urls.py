@@ -20,6 +20,7 @@ urlpatterns = [
     re_path(r'^order/$', order, name='order'),
     re_path(r'^addTocart/(?P<dishID>\d+)/(?P<userID>\d+)/$',
             addTocart, name='addTocart'),
+    re_path(r'^placeOrder/$',placeOrder, name='placeOrder'),
     re_path(r'^delete_item/(?P<ID>\d+)/$', delete_item, name='delete_item'),
     re_path(r'^edit_item/(?P<ID>\d+)/$', edit_item, name='edit_item'),
 
