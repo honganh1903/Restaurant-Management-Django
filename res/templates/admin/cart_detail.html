@@ -1,9 +1,12 @@
 {% load static %}
 {% include "includes/base.html" %}
-
+{% include "includes/navbarheader.html" %}
+{% include "includes/navtop.html"%}
+{% include "includes/sidemenu.html" %}
 </nav>
+<div id="page-wrapper">
 
-<div class="panel-body">
+  <div class="panel-body">
     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
             <tr>
@@ -20,29 +23,86 @@
         <tbody>
             <tr>
                 {% for item in detail %}
-                    {% for dish, amount in item.items %}
-                        {% if dish != 'total' %}
+                    {% for id, order in item.items %}
+                        {% if id != 'total' %}
                         <tr>
-                            <td><img src="/media/{{dish.image}}" alt="Mô tả hình ảnh" width="45" height="45"></td>
-                            <td>{{ dish.name }}</td>
-                            <td>{{ dish.price }}</td>
-                              <td>{{ amount.0}}</td>
-                              <td>{{ amount.1 }}</td>
+                            <td><img src="/media/{{order.0.image}}" alt="Mô tả hình ảnh" width="45" height="45"></td>
+                            <td>{{ order.0.name }}</td>
+                            <td>{{ order.0.price }}</td>
+                              <td>{{ odder.1}}</td>
+                              <td>{{ order.2 }}</td>
                             
-                            <td>{% if dish.status == 'Enabled' %}
+                            <td>{% if order.0.status == 'Enabled' %}
                               <span class="label label-success">Enabled</span>
                               {% else %}
                               <span class="label label-danger">Disabled</span>
                               {% endif %}
-                              
-                            <td>{% widthratio dish.price 1 amount.1 %}</td>
-                          </td>
+                            
+                            </td>
+                            <td>{% widthratio order.0.price 1 order.2 %}</td>
+                            <td>
+                                <form action="{% url 'res:delete_item_in_cart' id cartID %}" method="POST" style="position: relative;">
+                                {% csrf_token %}
+                                <button type="submit"class="btn btn-danger" >
+                                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>      
+                              </form>
+                            </td>
+                          <tr>
+                            
+                          </tr>
+                            
                         </tr>
                         {%else %}
-                        <td colspan="7" style="text-align: right; padding-right:70px;"><p>Total: {{amount }}</p></td>
+                            <td colspan="7" style="text-align: right; padding-right:70px;"><p>Total: {{order }}</p></td>
+
                         {%endif %}
+
                     {% endfor %}
             {% endfor %}
         </tbody>
     </table>
+    <form action="{% url 'res:edit_cart' cartID %}" method="POST" style="position: relative;">
+      {% csrf_token %}
+      <button type="submit" name="confirm" value="true" onclick="" 
+        style="background-color: #007bff; color: #fff; padding: 10px 20px; 
+               border: none; cursor: pointer; border-radius: 5px; 
+               font-size: 16px; position: absolute; top: 0; right: 200px;">
+        Confirm
+      </button>
+      <button type="submit" name="change" value="true" onclick="" 
+        style="background-color: #007bff; color: #fff; padding: 10px 20px; 
+               border: none; cursor: pointer; border-radius: 5px; 
+               font-size: 16px; position: absolute; top: 0; right: 400px;">
+        Change type
+      </button>
+        <button type="submit" name="cancel" value="true" onclick="" 
+        style="background-color: #007bff; color: #fff; padding: 10px 20px; 
+              border: none; cursor: pointer; border-radius: 5px; 
+              font-size: 16px; position: absolute; top: 0; right: 10px;">
+        Cancel
+      </button>
+    </form>
+    
 </div>
+</div>
+
+<script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+
+<!-- DataTables JavaScript -->
+<script src="{% static '/vendor/datatables/js/jquery.dataTables.min.js'%}"></script>
+<script src="{% static '/vendor/datatables-plugins/dataTables.bootstrap.min.js'%}"></script>
+<script src="{% static '/vendor/datatables-responsive/dataTables.responsive.js'%}"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+<script src="{% static 'vendor/metisMenu/metisMenu.min.js'%}"></script>
+<script src="{% static 'dist/js/sb-admin-2.js'%}"></script>

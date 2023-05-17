@@ -6,8 +6,8 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import *
 from datetime import datetime
+from django.contrib import messages
 
-# from .forms import DishForm
 from .forms import *
 
 from django.contrib.auth.decorators import login_required
@@ -64,7 +64,6 @@ def Login(request):
 # DISH
 
 
-
 def add_dish(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -77,9 +76,18 @@ def add_dish(request):
         filename = fs.save(image.name, image)
         if (name == "") or (status is None) or (menu_instance is None) or (price == ""):
             dishs = Dish.objects.filter()
-            error_msg = "Please enter valid details"
-            return render(request, 'res : dish_list', {'dishs': dishs, 'error_msg': error_msg})
+            messages.error(request, "Please enter valid details")
+            return render(request, 'res : dish_list', {'dishs': dishs})
+        
+        if Dish.objects.filter(name=name).exists():
+            dishs = Dish.objects.filter()
+            messages.error(request, "Dish with this name already exists.")
+            return redirect(reverse('res:dish_list'))
 
+        if Dish.objects.filter(image=filename).exists():
+            dishs = Dish.objects.filter()
+            messages.error(request, "Dish with this image already exists.")
+            return redirect(reverse('res:dish_list'))
         dish = Dish.objects.create(name=name,  status=status, menu=menu_instance,
                                    price=price, image=filename)
         dish.save()
@@ -137,6 +145,7 @@ def customer_list(request):
         customer.name = user.first_name + ' ' + user.last_name
     return render(request, 'admin/customer.html', {'customers': customers})
 
+
 @login_required
 @staff_member_required
 def add_customer(request):
@@ -149,28 +158,34 @@ def add_customer(request):
         confirm_password = request.POST['confirm_password']
         address = request.POST['address']
         number_phone = request.POST['number_phone']
-        
+
+        # Check if username is unique
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username has already been taken!')
+            return redirect(reverse('res:customer_list'))
+
         # Check if the password and confirmation password match
         if password != confirm_password:
-            customers = Customer.objects.filter()
-            error_msg = "Passwords do not match"
-            return render(request, 'res: customer_list', {'customers': customers, 'error_msg': error_msg})
+            messages.error(request, 'Password does not match!')
+            return redirect(reverse('res:customer_list'))
         
         # Create a new user instance
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password, email=email)
+        user = User.objects.create_user(
+            username=username, first_name=first_name, last_name=last_name, password=password, email=email)
+
         if (address == "") or (number_phone == ""):
-            customers = Customer.objects.filter()
-            error_msg = "Please enter valid details"
-            return render(request, 'res: customer_list', {'customers': customers, 'error_msg': error_msg})
-        
+            messages.error(request, "Please enter valid details")
+            return redirect(reverse('res:customer_list'))
+
         # Use the newly created user instance to create an customer
-        customer = Customer.objects.create(customer=user, address=address, number_phone=number_phone)
+        customer = Customer.objects.create(
+            customer=user, address=address, number_phone=number_phone)
         customer.save()
-        
+
         user.is_staff = True
         user.save()
-        
-        customers = Customer.objects.filter()
+        messages.success(request, f"Created customer {customer} successfully")
+
     return redirect(reverse('res:customer_list'))
 
 
@@ -181,26 +196,31 @@ def edit_customer(request, customerID):
     if request.method == 'POST':
         address = request.POST['address']
         number_phone = request.POST['number_phone']
-        
+
         if (address == "") or (number_phone == ""):
-            error_msg = "Please enter valid details"
-            return render(request, 'res: edit_customer', {'customer': customer, 'error_msg': error_msg})
-        
+            messages.error(request, "Please enter valid details")
+            return render(request, 'res: edit_customer', {'customer': customer})
+
         customer.address = address
         customer.number_phone = number_phone
         customer.save()
-        
+        messages.success(request, f"Updated customer {customer} successfully")
         return redirect(reverse('res:customer_list'))
     else:
-        return render(request, 'res: edit_customer', {'customer': customer})
+        return render(request, 'res:edit_customer', {'customer': customer})
+
 
 @login_required
 @staff_member_required
 def delete_customer(request, customerID):
-    customer = Customer.objects.get(id=customerID)
-    customer.customer.delete()
-    customer.delete()
-    return redirect(reverse('res:customer_list'))
+    if request.method == 'POST':
+        customer = Customer.objects.get(id=customerID)
+        customer.customer.delete()
+        customer.delete()
+        messages.success(request, "Delete customer successfully !!!")
+        return redirect(reverse('res:customer_list'))
+    else:
+        return render(request, 'res:delete_customer', {'customer': customer})
 
 
 # EMPLOEE
@@ -208,13 +228,14 @@ def delete_customer(request, customerID):
 @staff_member_required
 def employee_list(request):
     employees = Employee.objects.all()
-    
+
     for employee in employees:
         user = User.objects.get(id=employee.employee_id)
         employee.username = user.username
         employee.name = user.first_name + ' ' + user.last_name
 
     return render(request, 'admin/employee.html', {'employees': employees})
+
 
 @login_required
 @staff_member_required
@@ -228,28 +249,34 @@ def add_employee(request):
         confirm_password = request.POST['confirm_password']
         address = request.POST['address']
         number_phone = request.POST['number_phone']
-        
+
+        # Check if username is unique
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username has already been taken!')
+            return redirect(reverse('res:employee_list'))
+
         # Check if the password and confirmation password match
         if password != confirm_password:
-            employees = Employee.objects.filter()
-            error_msg = "Passwords do not match"
-            return render(request, 'res: employee_list', {'employees': employees, 'error_msg': error_msg})
+            messages.error(request, 'Password does not match!')
+            return redirect(reverse('res:employee_list'))
         
         # Create a new user instance
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password, email=email)
+        user = User.objects.create_user(
+            username=username, first_name=first_name, last_name=last_name, password=password, email=email)
+
         if (address == "") or (number_phone == ""):
-            employees = Employee.objects.filter()
-            error_msg = "Please enter valid details"
-            return render(request, 'res: employee_list', {'employees': employees, 'error_msg': error_msg})
-        
+            messages.error(request, "Please enter valid details")
+            return redirect(reverse('res:employee_list'))
+
         # Use the newly created user instance to create an employee
-        employee = Employee.objects.create(employee=user, address=address, number_phone=number_phone)
+        employee = Employee.objects.create(
+            employee=user, address=address, number_phone=number_phone)
         employee.save()
-        
+
         user.is_staff = True
         user.save()
-        
-        employees = Employee.objects.filter()
+        messages.success(request, f"Created employee {employee} successfully")
+
     return redirect(reverse('res:employee_list'))
 
 
@@ -260,55 +287,86 @@ def edit_employee(request, employeeID):
     if request.method == 'POST':
         address = request.POST['address']
         number_phone = request.POST['number_phone']
-        
+
         if (address == "") or (number_phone == ""):
-            error_msg = "Please enter valid details"
-            return render(request, 'res: edit_employee', {'employee': employee, 'error_msg': error_msg})
-        
+            messages.error(request, "Please enter valid details")
+            return render(request, 'res: edit_employee', {'employee': employee})
+
         employee.address = address
         employee.number_phone = number_phone
         employee.save()
-        
+        messages.success(request, f"Updated employee {employee} successfully")
         return redirect(reverse('res:employee_list'))
     else:
         return render(request, 'res:edit_employee', {'employee': employee})
 
+
 @login_required
 @staff_member_required
 def delete_employee(request, employeeID):
-    employee = Employee.objects.get(id=employeeID)
-    employee.employee.delete()
-    employee.delete()
-    return redirect(reverse('res:employee_list'))
-
+    if request.method == 'POST':
+        employee = Employee.objects.get(id=employeeID)
+        employee.employee.delete()
+        employee.delete()
+        messages.success(request, "Delete employee successfully !!!")
+        return redirect(reverse('res:employee_list'))
+    else:
+        return render(request, 'res:delete_employee', {'employee': employee})
 # CART
 
-def cart_detail(request,cartID): 
+@login_required
+@staff_member_required
+def cart_detail(request, cartID):
     detail = []
     total = 0
-    orders = Order.objects.filter(cart_id=3)
+    orders = Order.objects.filter(cart_id=cartID)
     for order in orders:
-        1
-        # order_detail = {}
-        # dish = Dish.objects.get(id = order.food_id)
-        # total = total + dish.price * order.amount
-        # order_detail[dish] = [order.details,order.amount]
-        # detail.append(order_detail)
-    # total1 = {"total": total}
-    # detail.append(total1)
-    # for item in detail :
-    #     for dish, k in item.items():
-    #         if dish != 'total':
-    #             for y in k:
-    #                 print(y)
-    #         else :
-    #             print(k)
-    return render(request, 'admin/cart_detail.html', {'detail': detail})
+        order_detail = {}
+        dish = Dish.objects.get(id = order.dish_id)
+        total = total + dish.price * order.amount
+        order_detail[order.id] = [dish,order.details,order.amount]
+        detail.append(order_detail)
+    total1 = {"total": total}
+    detail.append(total1)
+    return render(request, 'admin/cart_detail.html', {'detail': detail,'cartID' :cartID})
+
+@login_required
+@staff_member_required
+def edit_cart(request, cartID):
+    cart = Cart.objects.get(id=cartID)
+    if request.method == 'POST':
+        cart.status = "Completed"
+        cart.save()
+        if request.POST.get('confirm') == 'true':
+            cart.status = "Completed"
+            cart.save()
+        elif request.POST.get('change') == 'true':
+            cart.status = "Completed"
+            if cart.type == "PickUp":
+                cart.type = "Delivery"
+            else:
+                cart.type = "PickUp"    
+            cart.save()
+    return redirect(reverse('res:cart_list'))
+
+@login_required
+@staff_member_required
+def cart_list(request):
+    carts = Cart.objects.all()
+    return render(request, 'admin/cart.html', {'carts': carts})
+
+@login_required
+@staff_member_required
+def delete_item_in_cart(request, ID,cartID):
+    item = Order.objects.get(id=ID)
+    if request.method == "POST":
+        item.delete()
+        return redirect(reverse('res:cart_detail', args=[cartID]))
 
 def home(request):
     last_item = Menu.objects.last()
     menu = Menu.objects.exclude(id=last_item.id)
-    return render(request, 'res/home.html', {'menu': menu})
+    return render(request, 'admin/menu.html', {'menu': menu})
 
 
 def menu(request):
@@ -348,8 +406,12 @@ def addTocart(request, dishID, userID):
 @login_required
 def delete_item(request, ID):
     item = Order.objects.get(id=ID)
-    item.delete()
-    return redirect('res:order')
+    if request.method == "POST":
+        item.delete()
+        return redirect(reverse('res:cart_detail'))
+    else:
+        item.delete()
+        return redirect('res:order')
 
 
 @login_required
@@ -384,20 +446,10 @@ def placeOrder(request):
     # return redirect('hotel:cart')
     return render(request, 'res/order_sucess.html')
 
-def cart_list(request):
-    carts = Cart.objects.all()
-    list_idcart = []
-    for elm in carts:
-        customers = Customer.objects.filter(id=elm.employee_id)
-        list_idcart.append(elm.id)
-    return render(request, 'admin/cart.html', {'list_idcart': list_idcart, 'customers': customers})
 def delete_dish_in_cart(request, cartID,dishID):
     cart = Cart.objects.get(id = cartID)
-    item = Dish.objects.get(id = dishID)
+    oder = Order.objects.get(dish_id = dishID)
     if request.method == 'POST':
         print('Delete')
-        item.delete()
-    return redirect(reverse('res:cart_list'))
-def show_html(request):
-    return render(request, 'admin/h.html')
-
+        oder.delete()
+    return redirect(reverse('res:cart_detail'))

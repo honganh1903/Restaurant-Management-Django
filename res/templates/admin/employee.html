@@ -7,6 +7,15 @@
 </nav>
 
 <div id="page-wrapper">
+     <!-- Main Content -->
+     <div id="content">
+
+        {% include 'includes/messages.html' %}
+
+        {% block content %}  {% endblock content %}
+        
+      </div>
+ <!-- End of Main Content --> 
     {% if error_msg %}
     <div class="alert alert-danger">{{ error_msg }}</div>
     {% endif %}
@@ -131,12 +140,9 @@
                                                     <h4 class="modal-title">Edit Employees Details</h4>
                                                 </div>
                                                 <div class="modal-body">
-<<<<<<< HEAD
-                                                    <form method="POST" action='/edit_employee'>
-=======
                                                     <form method="POST"
                                                         action="{% url 'res:edit_employee' employee.id %}">
->>>>>>> faff8b231296647406d12459ed18500ed7ef89ee
+
                                                         {% csrf_token %}
                                                         <div class="form-group">
                                                             <label for="number_phone">Phone number:</label>
@@ -228,6 +234,14 @@
         });
     });
 </script>
+
+<script>
+    setTimeout(function(){
+      if ($('#msg').length > 0) {
+        $('#msg').remove();
+      }
+    }, 2000)
+  </script> 
 
 <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
 <script src="{% static 'vendor/metisMenu/metisMenu.min.js'%}"></script>
