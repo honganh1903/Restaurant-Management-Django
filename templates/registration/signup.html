@@ -56,6 +56,9 @@
                                 {{field}}
                             </div>
                             {% endfor %}
+                            {% for error in messages %}
+                                <p>{{ error }}</p><br>
+                            {% endfor %}
                             <button type="submit" class="btn btn-lg btn-success btn-block">Signup</button>
                             </fieldset>
                             <br>
