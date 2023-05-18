@@ -10,8 +10,6 @@ from datetime import datetime
 from .forms import *
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
-from django.db.models import Q
 
 @login_required
 @staff_member_required
@@ -375,7 +373,6 @@ def edit_cart(request, cartID):
 @staff_member_required
 def cart_list(request):
     carts = Cart.objects.all()
-    print(carts)
     return render(request, 'admin/cart.html', {'carts': carts})
 
 @login_required
@@ -397,7 +394,7 @@ def menu(request):
     return render(request, 'res/menu.html', {'menu': menu})
 
 
-# @login_required
+@login_required
 def menu_details(request, id):
     menu = Menu.objects.get(id=id)
     dishes = Dish.objects.filter(menu=menu)
@@ -545,6 +542,5 @@ def delete_dish_in_cart(request, cartID,dishID):
     cart = Cart.objects.get(id = cartID)
     oder = Order.objects.get(dish_id = dishID)
     if request.method == 'POST':
-        print('Delete')
         oder.delete()
     return redirect(reverse('res:cart_detail'))
