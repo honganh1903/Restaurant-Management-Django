@@ -517,7 +517,7 @@ def edit_profile(request, ID):
     if request.method == "POST":
         customer.customer.first_name = request.POST['firstname']
         customer.customer.last_name = request.POST['lastname']
-        customer.customer.email = request.POST['email']
+        # customer.customer.email = request.POST['email']
         customer.address = request.POST['address']
         customer.number_phone = request.POST['phonenumber']
         customer.save()
