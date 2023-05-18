@@ -31,18 +31,19 @@ def signup(request):
             user.username = user.email
             user.set_password(form.cleaned_data['password'])
             
-            user_check = authenticate(request, username = user.username)
-            if user_check is None:
+            try:
+                User.objects.get(username= user.username)
+                
+            except User.DoesNotExist:
                 user.save()
                 address = form.cleaned_data['address']
                 number_phone = form.cleaned_data['number_phone']
                 customer = Customer.objects.create(
                     customer=user, address=address, number_phone=number_phone)
                 customer.save()
-            else:
-                messages.error(request, 'Email is available')
-                return redirect('http://localhost:8000/accounts/signup')
-            return redirect('http://localhost:8000/accounts/login')
+                return redirect('http://localhost:8000/accounts/login')
+            messages.error(request, 'Email already exists')
+            return redirect('http://localhost:8000/accounts/signup')
 
     else:
         form = SignUpForm()
@@ -519,7 +520,6 @@ def edit_profile(request, ID):
         customer.customer.email = request.POST['email']
         customer.address = request.POST['address']
         customer.number_phone = request.POST['phonenumber']
-        customer.customer.username = request.POST['username']
         customer.save()
     return render(request, 'res/profile.html', {'customer' : customer})
 
