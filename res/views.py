@@ -10,6 +10,7 @@ from datetime import datetime
 from .forms import *
 
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 @login_required
 @staff_member_required
@@ -97,11 +98,11 @@ def add_dish(request):
         dish = Dish.objects.create(name=name,  status=status, menu=menu_instance,
                                    price=price, image=filename)
         
-        messages.success(request, f"Created customer {dish} successfully")
+        messages.success(request, f"Created dish {dish} successfully")
         
         dish.save()
         dishs = Dish.objects.filter()
-    return redirect(reverse('res:dish_list', {'dishs': dishs}))
+    return redirect(reverse('res:dish_list'))
 
 
 def dish_list(request):
@@ -116,10 +117,6 @@ def edit_dish(request, dishID):
 
     if request.method == "POST":
         nameEdit = request.POST.get('name', dish.name)
-        if Dish.objects.filter(name=nameEdit).exists():
-            dishs = Dish.objects.filter()
-            messages.error(request, "Dish with this name already exists.")
-            return redirect(reverse('res:dish_list', {'dishs': dishs}))
 
         status = request.POST.get('status')
         if status:
@@ -136,9 +133,9 @@ def edit_dish(request, dishID):
 
         dish.name = nameEdit
 
-        messages.success(request, f"Created customer {dish} successfully")
-
         dish.save()
+        dishes = Dish.objects.all()
+        messages.success(request, f"Update dish {dish} successfully")
 
     return redirect(reverse('res:dish_list'))
 
