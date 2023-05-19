@@ -15,7 +15,7 @@
                 <th>Price</th>
                 <th>Amount</th>
                 <th>Status</th>
-                <th>Total</th>
+                <!-- <th>Total</th> -->
                 <!-- <th>Remove</th> -->
             </tr>
         </thead>
@@ -28,7 +28,7 @@
                         <td><img src="/media/{{order.0.image}}" alt="Mô tả hình ảnh" width="45" height="45"></td>
                         <td>{{ order.0.name }}</td>
                         <td>{{ order.0.price }}</td>
-                          <td>{{ odder.1}}</td>
+                          <!-- <td>{{ odder.1}}</td> -->
                           <td>{{ order.2 }}</td>
                         
                         <td>{% if order.0.status == 'Enabled' %}
@@ -56,12 +56,13 @@
                font-size: 16px; position: absolute; top: 0; right: 200px;">
         Confirm
       </button>
-        <button type="submit" name="cancel" value="true" onclick="" 
+      <button type="button" onclick="window.history.back();" 
         style="background-color: #007bff; color: #fff; padding: 10px 20px; 
-              border: none; cursor: pointer; border-radius: 5px; 
-              font-size: 16px; position: absolute; top: 0; right: 10px;">
-        Cancel
+               border: none; cursor: pointer; border-radius: 5px; 
+               font-size: 16px; position: absolute; top: 0; right: 10px;">
+        Back
       </button>
+
     </form>
     
 </div>
